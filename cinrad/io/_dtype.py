@@ -9,11 +9,14 @@ __all__ = [
     'SDD_cut', 'SDD_rad_header', 'SDD_mom_header', 'SAB_dtype', 'CAB_dtype',
     'SWAN_dtype', 'CD_dtype', 'CD_DATA', 'SDD_pheader', 'L3_radial', 'L3_rblock',
     'S_SPECIAL_dtype', 'CC2_header', 'CC2_obs', 'CC2_data', 'CC2_other', 'PA_radial',
-    'L3_raster','L3_hail','L3_meso','L3_feature','L3_tvs','L3_sti_header','L3_sti_motion',
-    'L3_sti_position','L3_sti_attribute','L3_sti_component','L3_sti_adaptation',
-    'L3_vwp_header','L3_vwp','L3_swp','L3_uam','mocm_dtype','mocm_si_dtype','mocm_si_block',
-    'L3_wer_header','PA_SDD_site', 'PA_SDD_task', 'PA_SDD_beam', 'PA_SDD_cut', 'PA_SDD_rad_header',
+    'L3_raster', 'L3_hail', 'L3_meso', 'L3_feature', 'L3_tvs', 'L3_sti_header', 'L3_sti_motion',
+    'L3_sti_position', 'L3_sti_attribute', 'L3_sti_component', 'L3_sti_adaptation',
+    'L3_vwp_header', 'L3_vwp', 'L3_swp', 'L3_uam', 'mocm_dtype', 'mocm_si_dtype', 'mocm_si_block',
+    'L3_wer_header', 'L3_vad_header', 'L3_vad', 'L3_wind_header', 'L3_wind', 'L3_ss_table', 'L3_ss_cell_trend',
+    'L3_ss_cell_segment', 'L3_ss_centroids', 'L3_ss_storm_track', 'L3_ml',
+    'PA_SDD_site', 'PA_SDD_task', 'PA_SDD_beam', 'PA_SDD_cut', 'PA_SDD_rad_header',
 ]
+
 # fmt: on
 from cinrad.io._radar_struct.CC import (
     scan_param_dtype as CC_param,
@@ -51,6 +54,16 @@ from cinrad.io._radar_struct.standard_data import (
     l3_swp as L3_swp,
     l3_uam_dtype as L3_uam,
     l3_wer_header_dtype as L3_wer_header,
+    l3_vad_header_dtype as L3_vad_header,
+    l3_vad_table_dtype as L3_vad,
+    l3_wind_header_dtype as L3_wind_header,
+    l3_wind_table_dtype as L3_wind,
+    l3_ss_table_dtype as L3_ss_table,
+    l3_ss_cell_trend_dtype as L3_ss_cell_trend,
+    l3_ss_cell_segment_dtype as L3_ss_cell_segment,
+    l3_ss_storm_track_dtype as L3_ss_storm_track,
+    l3_ss_centroids_dtype as L3_ss_centroids,
+    l3_ml_table_dtype as L3_ml,
 )
 from cinrad.io._radar_struct.CD import (
     radarsite_dtype as CD_site,

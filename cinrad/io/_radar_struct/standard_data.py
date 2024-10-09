@@ -186,77 +186,77 @@ pa_task_config = [
 pa_task_config_dtype = np.dtype(pa_task_config)
 
 pa_beam = [
-    ('beam_index', 'i4'),  
-    ('beam_type', 'i4'),  
-    ('sub_pulse_number', 'i4'),  
-    ('tx_beam_direction', 'f4'),  
-    ('tx_beam_width_h', 'f4'),  
-    ('tx_beam_width_v', 'f4'),  
-    ('tx_beam_gain', 'f4'),  
-    ('reserved_00', '100c'),  
-    ('sub_pulse_strategy', 'i4'),  
-    ('sub_pulse_modulation', 'i4'),  
-    ('sub_pulse_frequency', 'f4'),  
+    ('beam_index', 'i4'),
+    ('beam_type', 'i4'),
+    ('sub_pulse_number', 'i4'),
+    ('tx_beam_direction', 'f4'),
+    ('tx_beam_width_h', 'f4'),
+    ('tx_beam_width_v', 'f4'),
+    ('tx_beam_gain', 'f4'),
+    ('reserved_00', '100c'),
+    ('sub_pulse_strategy', 'i4'),
+    ('sub_pulse_modulation', 'i4'),
+    ('sub_pulse_frequency', 'f4'),
     ('sub_pulse_band_width', 'f4'),
-    ('sub_pulse_width', 'i4'),  
+    ('sub_pulse_width', 'i4'),
     ('reserved_01', '492c'),
 ]
 
 pa_beam_dtype = np.dtype(pa_beam)
 
 pa_cut_config = [
-    ('cut_index', 'i2'),  
-    ('tx_beam_index', 'i2'),  
-    ('elev', 'f4'),  
-    ('tx_beam_gain', 'f4'),  
-    ('rx_beam_width_h', 'f4'),  
-    ('rx_beam_width_v', 'f4'),  
-    ('rx_beam_gain', 'f4'),  
-    ('process_mode', 'i4'),  
-    ('wave_form', 'i4'),  
-    ('n1_prf_1', 'f4'),  
-    ('n1_prf_2', 'f4'),  
-    ('n2_prf_1', 'f4'),  
-    ('n2_prf_2', 'f4'),  
-    ('unfold_mode', 'i4'),  
-    ('azimuth', 'f4'),  
-    ('start_angle', 'f4'),  
-    ('end_angle', 'f4'),  
-    ('angle_resolution', 'f4'),  
-    ('scan_speed', 'f4'),  
-    ('log_reso', 'f4'),  
-    ('dop_reso', 'f4'),  
-    ('maximum_range', 'i4'),  
-    ('maximum_range2', 'i4'),  
-    ('start_range', 'i4'),  
-    ('sample_1', 'i4'),  
-    ('sample_2', 'i4'),  
-    ('phase_mode', 'i4'),  
-    ('atmospheric_loss', 'f4'),  
-    ('nyquist_spd', 'f4'),  
-    ('moments_mask', 'i8'),  
-    ('moments_size_mask', 'i8'),  
-    ('misc_filter_mask', 'i4'),  
-    ('sqi_threshold', 'f4'),  
-    ('sig_threshold', 'f4'),  
-    ('csr_threshold', 'f4'),  
-    ('log_threshold', 'f4'),  
-    ('cpa_threshold', 'f4'),  
-    ('pmi_threshold', 'f4'),  
-    ('dplog_threshold', 'f4'),  
-    ('thresholds_reserved', '4c'),  
-    ('dbt_mask', 'i4'),  
-    ('dbz_mask', 'i4'),  
-    ('velocity', 'i4'),  
-    ('spectrum_width_mask', 'i4'),  
-    ('zdr_mask', 'i4'),  
-    ('mask_reserved', '12c'),  
-    ('scan_sync', '4c'),  
-    ('direction', 'i4'),  
-    ('ground_clutter_classifier_type', 'i2'),  
-    ('ground_clutter_filter_type', 'i2'),  
-    ('ground_clutter_filter_notch_width', 'i2'),  
-    ('ground_clutter_filter_window', 'i2'),  
+    ('cut_index', 'i2'),
+    ('tx_beam_index', 'i2'),
+    ('elev', 'f4'),
+    ('tx_beam_gain', 'f4'),
+    ('rx_beam_width_h', 'f4'),
+    ('rx_beam_width_v', 'f4'),
+    ('rx_beam_gain', 'f4'),
+    ('process_mode', 'i4'),
+    ('wave_form', 'i4'),
+    ('n1_prf_1', 'f4'),
+    ('n1_prf_2', 'f4'),
+    ('n2_prf_1', 'f4'),
+    ('n2_prf_2', 'f4'),
+    ('unfold_mode', 'i4'),
+    ('azimuth', 'f4'),
+    ('start_angle', 'f4'),
+    ('end_angle', 'f4'),
+    ('angle_resolution', 'f4'),
+    ('scan_speed', 'f4'),
+    ('log_reso', 'f4'),
+    ('dop_reso', 'f4'),
+    ('maximum_range', 'i4'),
+    ('maximum_range2', 'i4'),
+    ('start_range', 'i4'),
+    ('sample_1', 'i4'),
+    ('sample_2', 'i4'),
+    ('phase_mode', 'i4'),
+    ('atmospheric_loss', 'f4'),
+    ('nyquist_spd', 'f4'),
+    ('moments_mask', 'i8'),
+    ('moments_size_mask', 'i8'),
+    ('misc_filter_mask', 'i4'),
+    ('sqi_threshold', 'f4'),
+    ('sig_threshold', 'f4'),
+    ('csr_threshold', 'f4'),
+    ('log_threshold', 'f4'),
+    ('cpa_threshold', 'f4'),
+    ('pmi_threshold', 'f4'),
+    ('dplog_threshold', 'f4'),
+    ('thresholds_reserved', '4c'),
+    ('dbt_mask', 'i4'),
+    ('dbz_mask', 'i4'),
+    ('velocity', 'i4'),
+    ('spectrum_width_mask', 'i4'),
+    ('zdr_mask', 'i4'),
+    ('mask_reserved', '12c'),
+    ('scan_sync', '4c'),
+    ('direction', 'i4'),
+    ('ground_clutter_classifier_type', 'i2'),
+    ('ground_clutter_filter_type', 'i2'),
+    ('ground_clutter_filter_notch_width', 'i2'),
+    ('ground_clutter_filter_window', 'i2'),
     ('reserved', '44c')
 ]
 
@@ -277,7 +277,7 @@ pa_radial_header = [
     ("scan_beam_index", "i2"),
     ("hori_est_noise", "i2"),
     ("vert_est_noise", "i2"),
-    ("zip_type", "i4"), # acctualy it's ref flag,ziptype is reserved
+    ("zip_type", "i4"),  # acctualy it's ref flag,ziptype is reserved
     ("res6", "70c"),
 ]
 
@@ -537,3 +537,148 @@ l3_wer_header = [
 ]
 
 l3_wer_header_dtype = np.dtype(l3_wer_header)
+
+l3_vad_header = [
+    ("elevation", "f4"),
+    ("height", "i4"),
+    ("slant_Range", "i4"),
+    ("fit_valid", "i4"),
+    ("p0", "f4"),
+    ("p1", "f4"),
+    ("p2", "f4"),
+    ("wind_direction", "f4"),
+    ("wind_speed", "f4"),
+    ("rms", "f4"),
+    ("nyquist_velocity", "f4"),
+    ("number_data_points", "i4"),
+    ("res", "16c"),
+]
+
+l3_vad_header_dtype = np.dtype(l3_vad_header)
+
+l3_vad_table = [
+    ("azimuth", "f4"),
+    ("velocity", "f4"),
+    ("reflectivity", "f4"),
+]
+
+l3_vad_table_dtype = np.dtype(l3_vad_table)
+
+l3_ml_table = [
+    ("layer_top", "f4"),
+    ("layer_bottom", "f4"),
+    ("layer_max_height", "f4"),
+]
+
+l3_ml_table_dtype = np.dtype(l3_ml_table)
+
+l3_wind_header = [
+    ("Row_Resolution", "i4"),
+    ("Column_Resolution", "i4"),
+    ("Row_Side_Length", "i4"),
+    ("Column_Side_Length", "i4"),
+    ("Maximum_of_Wind_Speed", "f4"),
+    ("Minimum_of_Wind_Speed", "f4"),
+    ("Speed_Type", "i4"),
+    ("Speed_Scale", "i4"),
+    ("Speed_Offset", "i4"),
+    ("Speed_Bin_Length", "i2"),
+    ("Speed_Flag", "i2"),
+    ("Direction_Type", "i4"),
+    ("Direction_Scale", "i4"),
+    ("Direction_Offset", "i4"),
+    ("Direction_Bin_Length", "i2"),
+    ("Direction_Flag", "i2"),
+]
+l3_wind_header_dtype = np.dtype(l3_wind_header)
+
+l3_wind_table = [
+    ("speed", "i2"),
+    ("direction", "i2"),
+]
+
+l3_wind_table_dtype = np.dtype(l3_wind_table)
+
+l3_ss_table = [
+    ("storm_id", "i4"),
+    ("azimuth", "f4"),
+    ("range", "i4"),
+    ("base", "i4"),
+    ("top", "i4"),
+    ("vil", "f4"),
+    ("maximum_reflectivity", "f4"),
+    ("height_of_maximum_reflectivity", "i4"),
+]
+l3_ss_table_dtype = np.dtype(l3_ss_table)
+
+l3_ss_cell_trend_table = [
+    ("storm_id", "i4"),
+    ("number_of_volumes", "i4"),
+    ("volume_time", "i4"),
+    ("height", "i4"),
+    ("base_height", "i4"),
+    ("top_height", "i4"),
+    ("vil", "i4"),
+    ("maximum_reflectivity", "i4"),
+    ("height_of_maximum_reflectivity", "i4"),
+    ("possibility_of_hail", "i4"),
+    ("possibility_of_severe_hail", "i4"),
+]
+l3_ss_cell_trend_dtype = np.dtype(l3_ss_cell_trend_table)
+
+l3_ss_segment_table = [
+    ("reflecth1", "i4"),
+    ("reflecth2", "i4"),
+    ("reflecth3", "i4"),
+    ("reflecth4", "i4"),
+    ("reflecth5", "i4"),
+    ("reflecth6", "i4"),
+    ("reflecth7", "i4"),
+    ("nreflevl", "i4"),
+    ("numavgbn", "i4"),
+    ("segrngmx", "i4"),
+    ("mcoefctr", "f4"),
+    ("multfctr", "f4"),
+    ("mwgtfctr", "f4"),
+    ("seglenth1", "f4"),
+    ("seglenth2", "f4"),
+    ("seglenth3", "f4"),
+    ("seglenth4", "f4"),
+    ("seglenth5", "f4"),
+    ("seglenth6", "f4"),
+    ("seglenth7", "f4"),
+    ("drrefdff", "i4"),
+    ("ndropbin", "i4"),
+    ("numsegmx", "i4"),
+    ("radsegmx", "i4"),
+]
+l3_ss_cell_segment_dtype = np.dtype(l3_ss_segment_table)
+
+l3_ss_centroids_table = [
+("cmpareth1", "f4"),
+    ("cmpareth2", "f4"),
+    ("cmpareth3", "f4"),
+    ("cmpareth4", "f4"),
+    ("cmpareth5", "f4"),
+    ("cmpareth6", "f4"),
+    ("cmpareth7", "f4"),
+    ("radiusth1", "f4"),
+    ("radiusth2", "f4"),
+    ("radiusth3", "f4"),
+    ("stmvilmx", "i4"),
+    ("mxdetstm", "i4"),
+    ("ovlapadj", "i4"),
+    ("azmdlthr", "f4"),
+    ("depthdel", "f4"),
+    ("horizdel", "f4"),
+    ("elvmerge", "f4"),
+    ("hgmerge", "f4"),
+    ("hrzmerge", "f4"),
+    ("nbrsegmn", "i4"),
+    ("numcmpmx", "i4"),
+    ("mxpotcmp", "i4"),
+    ("numstmmx", "i4"),
+]
+l3_ss_centroids_dtype = np.dtype(l3_ss_centroids_table)
+
+l3_ss_storm_track_dtype = l3_sti_adaptation_dtype
