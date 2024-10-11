@@ -565,9 +565,13 @@ l3_vad_table = [
 l3_vad_table_dtype = np.dtype(l3_vad_table)
 
 l3_ml_table = [
-    ("layer_top", "f4"),
-    ("layer_bottom", "f4"),
-    ("layer_max_height", "f4"),
+    ("azimuth", 'f4'),
+    ("bottom", "i4"),
+    ("top", "i4"),
+    ("top_edge", "i4"),
+    ("top_center", "i4"),
+    ("bottom_center", "i4"),
+    ("bottom_edge", "i4"),
 ]
 
 l3_ml_table_dtype = np.dtype(l3_ml_table)

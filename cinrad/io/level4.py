@@ -721,8 +721,10 @@ class Standard_X_PUP(RadarBase):
         self._dataset = ds
 
     def _parse_ml_fmt(self):
+        # 融化层点阵数量
+        ml_count = np.frombuffer(self.f.read(4), 'i4')[0].item()
 
-        ml = arr_to_dict(np.frombuffer(self.f.read(12), L3_ml))
+        ml = np.frombuffer(self.f.read(ml_count*28), ml_count*L3_ml)[0]
 
         self._dataset = ml
 
