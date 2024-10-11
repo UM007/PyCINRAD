@@ -340,7 +340,7 @@ class StormTrackInfo(object):
         elif tracktype == "past":
             key = "past storm position"
         else:
-            raise KeyError("Key {} does not exist".format(key))
+            raise KeyError("Key {} does not exist".format(tracktype))
         if key not in self.info[storm_id].keys():
             return None
         forpos = self.info[storm_id][key]
