@@ -4,27 +4,27 @@
 import datetime
 
 import numpy as np
+from dask.array.ma import filled
 from xarray import Dataset, DataArray
 
 from cinrad.projection import get_coordinate, height
 from cinrad.constants import deg2rad
 from cinrad.io.base import RadarBase, prepare_file
-from cinrad.io.level3 import ProductParamsParser
+from cinrad.io.level3 import StandardPUP, ProductParamsParser
 from cinrad.io._dtype import *
 from cinrad.error import RadarDecodeError
 
 __all__ = ["Standard_X_PUP"]
 
 
-def arr_to_dict(arr):
-    data_dict = {}
-    for sd in arr:
-        for k in sd.dtype.names:
-            data_dict[k] = sd[k].item() if sd[k].size == 1 else [x.decode() for x in sd[k]]
+def arr_to_dictlist(arr):
+    fileds = arr.dtype.names
+    data_dict = [dict(zip(fileds, a)) for a in arr]
+
     return data_dict
 
 
-class Standard_X_PUP(RadarBase):
+class Standard_X_PUP(StandardPUP):
     # fmt: off
     dtype_corr = {1: 'TR', 2: 'REF', 3: 'V', 4: 'SW', 5: 'SQI', 6: 'CPA', 7: 'ZDR', 8: 'LDR',
                   9: 'CC', 10: 'PDP', 11: 'KDP', 12: 'CP', 14: 'HCL', 15: 'CF', 16: 'SNRH',
@@ -645,7 +645,7 @@ class Standard_X_PUP(RadarBase):
 
     def _parse_vad_fmt(self):
         vat_header = np.frombuffer(self.f.read(64), L3_vad_header)
-        attrs = arr_to_dict(vat_header)
+        attrs = arr_to_dictlist(vat_header)[0]
 
         number_data_points = vat_header["number_data_points"][0]
 
@@ -724,7 +724,7 @@ class Standard_X_PUP(RadarBase):
         # 融化层点阵数量
         ml_count = np.frombuffer(self.f.read(4), 'i4')[0].item()
 
-        ml = np.frombuffer(self.f.read(ml_count*28), ml_count*L3_ml)[0]
+        ml = arr_to_dictlist(np.frombuffer(self.f.read(ml_count * L3_ml.itemsize), ml_count * L3_ml)[0])
 
         self._dataset = ml
 
@@ -757,18 +757,18 @@ class Standard_X_PUP(RadarBase):
                     ("possibility_of_severe_hail", "i4"),
                 ])
 
-                trend_tables = arr_to_dict(np.frombuffer(self.f.read(nvolumes * 36), trend_dtype))
+                trend_tables = arr_to_dictlist(np.frombuffer(self.f.read(nvolumes * 36), trend_dtype))
                 trend_info = {'storm_id': storm_id,
                               'number_of_volumes': nvolumes,
                               'trend_tables': trend_tables, }
 
                 ss_cell_trend.append(trend_info)
 
-        segment_data = arr_to_dict(np.frombuffer(self.f.read(96), L3_ss_cell_segment))
+        segment_data = arr_to_dictlist(np.frombuffer(self.f.read(96), L3_ss_cell_segment))[0]
 
-        ss_centroids_adaptation = arr_to_dict(np.frombuffer(self.f.read(92), L3_ss_centroids))
+        ss_centroids_adaptation = arr_to_dictlist(np.frombuffer(self.f.read(92), L3_ss_centroids))[0]
 
-        ss_track_adaptation = arr_to_dict(np.frombuffer(self.f.read(40), L3_sti_adaptation))
+        ss_track_adaptation = arr_to_dictlist(np.frombuffer(self.f.read(40), L3_sti_adaptation))[0]
 
         ss_data = {'ss_table': ss_table,
                    'ss_trend': ss_cell_trend,
