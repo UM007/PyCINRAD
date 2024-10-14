@@ -179,13 +179,14 @@ class Standard_X_PUP(StandardPUP):
                 "site_latitude": self.stationlat,
                 "tangential_reso": reso,
                 "task": self.task_name,
+                "data_fmt":'radial',
             },
         )
         if nradial > 0:
             ds["longitude"] = (["azimuth", "distance"], lon)
             ds["latitude"] = (["azimuth", "distance"], lat)
             ds["height"] = (["azimuth", "distance"], hgt)
-            if self.pname in ["VEL", "SW"]:
+            if self.pname in ["V", "VEL", "SW"]:
                 ds["RF"] = (["azimuth", "distance"], data_rf)
         self._dataset = ds
 
@@ -227,6 +228,8 @@ class Standard_X_PUP(StandardPUP):
                 "site_longitude": self.stationlon,
                 "site_latitude": self.stationlat,
                 "tangential_reso": reso,
+                "data_fmt": 'raster',
+
             },
         )
         self._dataset = ds
