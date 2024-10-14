@@ -33,7 +33,7 @@ data_pth = join("cinrad", "data")
 
 setup(
     name="cinrad",
-    version="1.9.2.2",
+    version="1.9.2.3",
     description="Decode CINRAD radar data and visualize",
     long_description="Decode CINRAD radar data and visualize",
     license="GPL Licence",
