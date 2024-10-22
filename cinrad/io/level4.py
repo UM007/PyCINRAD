@@ -294,10 +294,12 @@ class Standard_X_PUP(StandardPUP):
                 "site_latitude": self.stationlat,
                 "tangential_reso": reso,
                 "task": self.task_name,
+                "data_fmt": 'raster',
             },
         )
         ds["longitude"] = (["azimuth", "distance"], lon)
         ds["latitude"] = (["azimuth", "distance"], lat)
+
         self._dataset = ds
 
     def _parse_vwp_fmt(self):
@@ -649,6 +651,7 @@ class Standard_X_PUP(StandardPUP):
     def _parse_vad_fmt(self):
         vat_header = np.frombuffer(self.f.read(64), L3_vad_header)
         attrs = arr_to_dictlist(vat_header)[0]
+        attrs.pop('res')
 
         number_data_points = vat_header["number_data_points"][0]
 
