@@ -69,7 +69,7 @@ class Standard_X_PUP(StandardPUP):
         elif self.ptype == 38:
             self._parse_hail_fmt()
         elif self.ptype == 39:
-            self._parse_meso_fmt()
+            self._parse_m_fmt()
         elif self.ptype == 40:
             self._parse_tvs_fmt()
         elif self.ptype == 41:
@@ -179,7 +179,7 @@ class Standard_X_PUP(StandardPUP):
                 "site_latitude": self.stationlat,
                 "tangential_reso": reso,
                 "task": self.task_name,
-                "data_fmt":'radial',
+                "data_fmt": 'radial',
             },
         )
         if nradial > 0:
@@ -418,45 +418,38 @@ class Standard_X_PUP(StandardPUP):
         ds["latitude"] = DataArray(lat[:, 0])
         self._dataset = ds
 
-    def _parse_meso_fmt(self):
+    def _parse_m_fmt(self):
         storm_count = np.frombuffer(self.f.read(4), "i4")[0]
-        meso_count = np.frombuffer(self.f.read(4), "i4")[0]
+        m_count = np.frombuffer(self.f.read(4), "i4")[0]
         feature_count = np.frombuffer(self.f.read(4), "i4")[0]
-        meso_table = np.frombuffer(self.f.read(meso_count * 68), L3_meso)
-        feature_table = np.frombuffer(self.f.read(feature_count * 72), L3_feature)
-        npvthr = np.frombuffer(self.f.read(4), "i4")[0]
-        fhthr = np.frombuffer(self.f.read(4), "f4")[0]
-        meso_azimuth = np.array(meso_table["meso_azimuth"])
-        meso_range = np.array(meso_table["meso_range"])[:, np.newaxis]
-        lon, lat = get_coordinate(
-            meso_range / 1000,
-            meso_azimuth * deg2rad,
-            self.params["elevation"],
-            self.stationlon,
-            self.stationlat,
-        )
 
-        data_dict = {}
-        # fmt: off
-        for key in ["feature_id", "storm_id", "meso_azimuth", "meso_range", "meso_elevation",
-                    "meso_avgshr", "meso_height", "meso_azdia", "meso_radius", "meso_avgrv",
-                    "meso_mxrv", "meso_top", "meso_base", "meso_baseazim", "meso_baserange",
-                    "meso_baseelevation", "meso_mxtanshr"]:
-            data_dict[key] = DataArray(meso_table[key])
+        m_table = np.frombuffer(self.f.read(m_count * 68), L4_m)
+        m_list = arr_to_dictlist(m_table)
+
+        feature_table = np.frombuffer(self.f.read(feature_count * 72), L4_feature)
+        feature_list = arr_to_dictlist(feature_table)
+
+        dataAdapter = np.frombuffer(self.f.read(52), L4_m_dataAdapter)
+        dataAdapter = arr_to_dictlist(dataAdapter)[0]
+
+
+
         # fmt: on
-        attrs_dict = {
+        ds = {
             "scan_time": self.scantime.strftime("%Y-%m-%d %H:%M:%S"),
             "site_code": self.code,
             "site_name": self.name,
             "site_longitude": self.stationlon,
             "site_latitude": self.stationlat,
             "task": self.task_name,
-            "npvthr": npvthr,
-            "fhthr": fhthr,
+            'storm_count': storm_count,
+            'm_count': m_count,
+            'm_list': m_list,
+            'feature_count': feature_count,
+            'feature_list': feature_list,
+            'dataAdapter': dataAdapter
         }
-        ds = Dataset(data_dict, attrs=attrs_dict)
-        ds["longitude"] = DataArray(lon[:, 0])
-        ds["latitude"] = DataArray(lat[:, 0])
+
         self._dataset = ds
 
     def _parse_tvs_fmt(self):
@@ -670,6 +663,58 @@ class Standard_X_PUP(StandardPUP):
         )
         self._dataset = vad
 
+    # def _parse_wind_fmt(self):
+    #     wind_header = np.frombuffer(self.f.read(56), L3_wind_header)
+    #     attrs = {}
+    #     for w in wind_header.dtype.names[:-1]:
+    #         attrs[w] = wind_header[w][0]
+    #
+    #     code_len = int(attrs['Row_Side_Length']) * int(attrs['Column_Side_Length']) * 4
+    #     wind_table = np.frombuffer(self.f.read(code_len), L3_wind)
+    #     raw_speed = np.array(wind_table["speed"])
+    #     raw_speed = np.ma.masked_less(raw_speed, attrs['Speed_Offset'])
+    #
+    #     raw_direction = np.array(wind_table["direction"])
+    #     raw_direction = np.ma.masked_less(raw_direction, attrs['Direction_Offset'])
+    #
+    #     nx = attrs['Row_Side_Length'] // attrs['Row_Resolution']
+    #     ny = attrs['Column_Side_Length'] // attrs['Column_Resolution']
+    #     reso = attrs['Row_Resolution']
+    #
+    #     wind_speed_data = (raw_speed - attrs['Speed_Offset']) / attrs['Speed_Scale']
+    #     wind_speed_data = np.reshape(wind_speed_data, (nx, ny))
+    #
+    #     wind_direction_data = (raw_direction - attrs['Direction_Offset']) / attrs['Direction_Scale']
+    #     wind_direction_data = np.reshape(wind_direction_data, (nx, ny))
+    #
+    #     max_range = int(nx / 2000 * reso)
+    #     y = np.linspace(max_range, max_range * -1, ny) / 111 + self.stationlat
+    #     x = np.linspace(max_range * -1, max_range, nx) / (111 * np.cos(y * deg2rad)) + self.stationlon
+    #     lon, lat = np.meshgrid(x, y)
+    #     speed = DataArray(
+    #         wind_speed_data,
+    #         coords=[lat[:, 0], lon[0]],
+    #         dims=["latitude", "longitude"],
+    #     )
+    #     direction = DataArray(
+    #         wind_direction_data,
+    #         coords=[lat[:, 0], lon[0]],
+    #         dims=["latitude", "longitude"],
+    #     )
+    #     ds = Dataset(
+    #         {"wind_speed": speed, "wind_direction": direction},
+    #         attrs={
+    #             "elevation": 0,
+    #             "range": max_range,
+    #             "scan_time": self.scantime.strftime("%Y-%m-%d %H:%M:%S"),
+    #             "site_code": self.code,
+    #             "site_name": self.name,
+    #             "site_longitude": self.stationlon,
+    #             "site_latitude": self.stationlat,
+    #             "tangential_reso": reso,
+    #         },
+    #     )
+    #     self._dataset = ds
     def _parse_wind_fmt(self):
         wind_header = np.frombuffer(self.f.read(56), L3_wind_header)
         attrs = {}
@@ -689,31 +734,19 @@ class Standard_X_PUP(StandardPUP):
         reso = attrs['Row_Resolution']
 
         wind_speed_data = (raw_speed - attrs['Speed_Offset']) / attrs['Speed_Scale']
-        wind_speed_data = np.reshape(wind_speed_data, (nx, ny))
+        # 将masked数据置为0
+        # wind_speed_data = np.ma.filled(wind_speed_data, 0)
+        # wind_speed_data = np.reshape(wind_speed_data, (nx, ny))
 
         wind_direction_data = (raw_direction - attrs['Direction_Offset']) / attrs['Direction_Scale']
-        wind_direction_data = np.reshape(wind_direction_data, (nx, ny))
+        # wind_direction_data = np.reshape(wind_direction_data, (nx, ny))
 
-        max_range = int(nx / 2 * reso)
-        y = np.linspace(max_range, max_range * -1, ny) / 111 + self.stationlat
-        x = (
-                np.linspace(max_range * -1, max_range, nx) / (111 * np.cos(y * deg2rad))
-                + self.stationlon
-        )
-        lon, lat = np.meshgrid(x, y)
-        speed = DataArray(
-            wind_speed_data,
-            coords=[lat[:, 0], lon[0]],
-            dims=["latitude", "longitude"],
-        )
-        direction = DataArray(
-            wind_direction_data,
-            coords=[lat[:, 0], lon[0]],
-            dims=["latitude", "longitude"],
-        )
-        ds = Dataset(
-            {"wind_speed": speed, "wind_direction": direction},
-            attrs={
+        max_range = int(nx / 2000 * reso)
+        lat = np.linspace(max_range, max_range * -1, ny) / 111 + self.stationlat
+        lon = np.linspace(max_range * -1, max_range, nx) / (111 * np.cos(lat * deg2rad)) + self.stationlon
+        # lon, lat = np.meshgrid(x, y)
+
+        ds = {
                 "elevation": 0,
                 "range": max_range,
                 "scan_time": self.scantime.strftime("%Y-%m-%d %H:%M:%S"),
@@ -722,8 +755,11 @@ class Standard_X_PUP(StandardPUP):
                 "site_longitude": self.stationlon,
                 "site_latitude": self.stationlat,
                 "tangential_reso": reso,
-            },
-        )
+                'left': lon.min(), 'right': lon.max(), 'top': lat.max(), 'bottom': lat.min(), 'rows': ny, 'cols': nx,
+                'height': 0, 'noDataValue': None,
+                "speed": wind_speed_data,
+                "direction": wind_direction_data
+            }
         self._dataset = ds
 
     def _parse_ml_fmt(self):

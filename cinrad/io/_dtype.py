@@ -14,6 +14,7 @@ __all__ = [
     'L3_vwp_header', 'L3_vwp', 'L3_swp', 'L3_uam', 'mocm_dtype', 'mocm_si_dtype', 'mocm_si_block',
     'L3_wer_header', 'L3_vad_header', 'L3_vad', 'L3_wind_header', 'L3_wind', 'L3_ss_table', 'L3_ss_cell_trend',
     'L3_ss_cell_segment', 'L3_ss_centroids', 'L3_ss_storm_track', 'L3_ml',
+    'L4_m', 'L4_feature','L4_m_dataAdapter',
     'PA_SDD_site', 'PA_SDD_task', 'PA_SDD_beam', 'PA_SDD_cut', 'PA_SDD_rad_header',
 ]
 
@@ -64,6 +65,9 @@ from cinrad.io._radar_struct.standard_data import (
     l3_ss_storm_track_dtype as L3_ss_storm_track,
     l3_ss_centroids_dtype as L3_ss_centroids,
     l3_ml_table_dtype as L3_ml,
+    l4_m_table_dtype as L4_m,
+    l4_feature_table_dtype as L4_feature,
+    l4_m_dataAdapter_dtype as L4_m_dataAdapter,
 )
 from cinrad.io._radar_struct.CD import (
     radarsite_dtype as CD_site,

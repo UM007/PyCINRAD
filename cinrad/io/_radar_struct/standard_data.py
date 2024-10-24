@@ -391,6 +391,68 @@ l3_feature_table = [
 
 l3_feature_table_dtype = np.dtype(l3_feature_table)
 
+l4_m_table = [
+    ("feature_id", "i4"),
+    ("storm_id", "i4"),
+    ("m_azimuth", "f4"),
+    ("m_range", "i4"),
+    ("m_elevation", "f4"),
+    ("m_avgshr", "f4"),
+    ("m_height", "i4"),
+    ("m_azdia", "i4"),
+    ("m_radia", "i4"),
+    ("m_avgrv", "f4"),
+    ("m_mxrv", "f4"),
+    ("m_top", "i4"),
+    ("m_base", "i4"),
+    ("m_baseazim", "f4"),
+    ("m_baserange", "i4"),
+    ("m_baseelevation", "f4"),
+    ("m_mxtanshr", "f4"),
+]
+
+l4_m_table_dtype = np.dtype(l4_m_table)
+
+l4_feature_table = [
+    ("feature_id", "i4"),
+    ("storm_id", "i4"),
+    ("feature_type", "i4"),
+    ("feature_azimuth", "f4"),
+    ("feature_range", "i4"),
+    ("feature_elevation", "f4"),
+    ("feature_height", "i4"),
+    ("feature_azdia", "i4"),
+    ("feature_radia", "i4"),
+    ("feature_avgshr", "f4"),
+    ("feature_maxshr", "f4"),
+    ("feature_avgrv", "f4"),
+    ("feature_mxrv", "f4"),
+    ("feature_top", "i4"),
+    ("feature_base", "i4"),
+    ("feature_baseazim", "f4"),
+    ("feature_baserange", "i4"),
+    ("feature_baseelevation", "f4"),
+]
+
+l4_feature_table_dtype = np.dtype(l4_feature_table)
+
+l4_m_dataAdapter = [
+    ("npvthr", "i4"),
+    ("fhthr", "f4"),
+    ("hmthr", "f4"),
+    ("lmthr", "f4"),
+    ("hsthr", "f4"),
+    ("lsthr", "f4"),
+    ("mrthr", "f4"),
+    ("fmrthr", "f4"),
+    ("nrthr", "f4"),
+    ("fnrthr", "f4"),
+    ("rngthr", "f4"),
+    ("disthr", "f4"),
+    ("azthr", "f4")
+]
+l4_m_dataAdapter_dtype = np.dtype(l4_m_dataAdapter)
+
 l3_tvs_table = [
     ("tvs_id", "i4"),
     ("tvs_stormtype", "i4"),
