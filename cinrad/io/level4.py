@@ -55,7 +55,7 @@ class Standard_X_PUP(StandardPUP):
         elif self.ptype in [4, 6, 8, 9, 10, 18, 23, 53, 54, 56, 58]:
             self._parse_raster_fmt()
         elif self.ptype == 3:
-            self._parse_cappi_fmt()
+            self._parse_car_fmt()
         elif self.ptype == 20:
             self._parse_wer_fmt()
         elif self.ptype == 31:
@@ -179,7 +179,6 @@ class Standard_X_PUP(StandardPUP):
                 "site_latitude": self.stationlat,
                 "tangential_reso": reso,
                 "task": self.task_name,
-                "data_fmt": 'radial',
             },
         )
         if nradial > 0:
@@ -228,13 +227,11 @@ class Standard_X_PUP(StandardPUP):
                 "site_longitude": self.stationlon,
                 "site_latitude": self.stationlat,
                 "tangential_reso": reso,
-                "data_fmt": 'raster',
-
             },
         )
         self._dataset = ds
 
-    def _parse_cappi_fmt(self):
+    def _parse_car_fmt(self):
         azi = list()
         dist = list()
         data = list()
@@ -294,7 +291,6 @@ class Standard_X_PUP(StandardPUP):
                 "site_latitude": self.stationlat,
                 "tangential_reso": reso,
                 "task": self.task_name,
-                "data_fmt": 'raster',
             },
         )
         ds["longitude"] = (["azimuth", "distance"], lon)
@@ -763,10 +759,13 @@ class Standard_X_PUP(StandardPUP):
         self._dataset = ds
 
     def _parse_ml_fmt(self):
-        # 融化层点阵数量
-        ml_count = np.frombuffer(self.f.read(4), 'i4')[0].item()
+        try:
+            # 融化层点阵数量
+            ml_count = np.frombuffer(self.f.read(4), 'i4')[0].item()
+            ml = arr_to_dictlist(np.frombuffer(self.f.read(ml_count * L3_ml.itemsize), ml_count * L3_ml)[0])
 
-        ml = arr_to_dictlist(np.frombuffer(self.f.read(ml_count * L3_ml.itemsize), ml_count * L3_ml)[0])
+        except IndexError:
+            ml = []
 
         self._dataset = ml
 
