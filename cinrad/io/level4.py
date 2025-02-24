@@ -191,7 +191,7 @@ class Standard_X_PUP(StandardPUP):
 
     def _parse_raster_fmt(self):
         raster_header = np.frombuffer(self.f.read(64), L3_raster)
-        bin_length = raster_header["bin_length"][0]
+        bin_length = raster_header["bin_length"][0].item()
         scale = raster_header["scale"][0]
         offset = raster_header["offset"][0]
         reso = raster_header["row_reso"][0] / 1000
