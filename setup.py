@@ -33,9 +33,9 @@ data_pth = join("cinrad", "data")
 
 setup(
     name="cinrad",
-    version="1.9.2.6",
-    description="Decode CINRAD radar data and visualize",
-    long_description="Decode CINRAD radar data and visualize",
+    version="1.9.2.8",
+    description="CINRAD 雷达数据解码及可视化",
+    long_description="CINRAD 雷达数据解码及可视化",
     license="GPL Licence",
     author="gym",
     # author_email="dpy274555447@gmail.com",
@@ -49,7 +49,7 @@ setup(
         "pyshp!=2.0.0, !=2.0.1",
         "matplotlib>=2.2",
         "vanadis",
-        "cinrad_data>=0.1"
+        "cinrad_data>=0.1",
     ],
     package_dir={"cinrad": "cinrad"},
     package_data={"cinrad": [
